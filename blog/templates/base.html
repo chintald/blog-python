@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+  <title>{% block head_title %}Welcome - Blog{% endblock %}</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <div class="container">
+      <a href="{% url 'core:home' %}" class="navbar-brand">Django blog</a>
+      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+        <div class="navbar-nav">
+          <a href="{% url 'core:home' %}"
+            class="nav-item nav-link  {% if request.path == '/' %}active{% endif %}">Home</a>
+        </div>
+
+        {% if request.user.is_authenticated %}
+        <div class="navbar-nav ml-auto">
+          <a href="{% url 'core:post_create' %}"
+    class="nav-item nav-link {% if request.path == '/post/create/' %}active{% endif %}">
+    Create a post
+  </a>
+          <a href="{% url 'users:profile' request.user.username %}"
+            class="nav-item nav-link {% if request.user.username in request.path %}active{% endif %}">
+            Profile
+         </a>
+          <a href="{% url 'users:log_out' %}" class="nav-item nav-link">Log out</a>
+        </div>
+        {% else %}
+        <div class="navbar-nav ml-auto">
+          <a href="{% url 'users:log_in' %}"
+            class="nav-item nav-link {% if request.path == '/users/login/' %}active{% endif %}">Log in</a>
+          <a href="{% url 'users:signup' %}"
+            class="nav-item nav-link {% if request.path == '/users/signup/' %}active{% endif %}">Sign up</a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+  {% block content %}
+  {% endblock content %}
+  <!-- ... removed for brevity -->
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!-- templates/core/CommentForm.html -->
+{% extends "base.html" %}
+
+{% block head_title %}Update Comment{% endblock head_title %}
+
+{% block content %}
+<div class="container"> 
+  <div class="row">
+    <div class="col-8 offset-2">
+      <h2 class=" my-5">Update Comment</h2>
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <!-- <input type="text" class="form-control {% if form.title.errors %}is-invalid{% endif %}" id="id_title"
+            name="title" value='{{ form.title.value|default:"" }}'>
+          {% if form.title.errors %}
+          <div class="invalid-feedback">{{ form.title.errors }}</div>
+          {% endif %} -->
+        </div>
+
+        <!-- <div class="form-group">
+          {{ form.content.label_tag }}
+          <textarea type="text" class="form-control {% if form.content.errors %}is-invalid{% endif %}" id="id_content"
+            name="content" cols="40" rows="10">{{ form.content}}</textarea>
+        </div> -->
+
+        <div>{{ data.content }}</div>
+        {{ form.as_p }}
+
+        <button type="submit" value="Update"  class="btn btn-primary">
+          Update Comment
+        </button>
+  
+
+    </div>
+  </div>
+</div>
+{% endblock content %}
