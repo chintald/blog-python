@@ -23,11 +23,13 @@ RUN apk add --no-cache --virtual .build-deps build-base linux-headers \
 
 COPY requirements.txt /app/requirements.txt
 
-RUN adduser -D myuser
-USER myuser
+# RUN adduser -D myuser
+# USER myuser
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
+
 COPY . .
 
+CMD [ "python manage.py makemigratios", "python manage.py migrate" ]

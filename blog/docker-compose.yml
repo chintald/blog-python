@@ -15,32 +15,60 @@ services:
     container_name: dev_backend
     build: .
     restart: always
-    env_file: .env
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
      - .:/app
      - static_volume:/app/static
     ports:
-      - 8080:8000
-    depends_on:
-     - db
+      - 0.0.0.0:8080:8000
+    
+    links:
+      - db:db
 
     environment:
       - DEBUG=0
-     
+
+    depends_on:
+     - db
+
+    networks:
+      - db
+
   db:
+    image: kartoza/postgis
     container_name: dev_db
-    image: postgres:12.0-alpine
-    env_file: .env
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-
-    ports:
-      - 5433:5432
-
     environment:
-      - DB_PASSWORD=1234
+      - DB_HOST=db
+      - POSTGRES_DB=blog
+      - POSTGRES_USER=chintal
+      - POSTGRES_PASSWORD=mypasss
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - 5435:5432
+    networks:
+      - db
+     
+  # db:
+  #   container_name: dev_db
+  #   image: postgres:12.0-alpine
+    
+  #   environment:
+  #     - POSTGRES_DB=blog
+  #     - POSTGRES_USER=chintal
+  #     - POSTGRES_PASSWORD=1234
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data/
 
+  #   ports:
+  #     - 0.0.0.0:5432:5432
+
+  #   expose:
+  #   - 5432
+  #   networks:
+  #     - db
+    
+networks:
+  db:
 
 volumes:
   static_volume:
