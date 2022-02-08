@@ -4,6 +4,7 @@ attr==0.3.1
 attrs==19.3.0
 backports.zoneinfo==0.2.1
 Django==3.2.5
+django-environ==0.8.1
 django-filter==21.1
 django-graphql-auth==0.3.16
 django-graphql-jwt==0.3.0
@@ -11,6 +12,7 @@ graphene==2.1.9
 graphene-django==2.15.0
 graphql-core==2.3.2
 graphql-relay==2.0.1
+gunicorn==20.1.0
 Pillow==9.0.1
 promise==2.3
 psycopg2==2.9.3

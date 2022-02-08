@@ -9,15 +9,24 @@ ENV PYTHONUNBUFFERED 1
 
 
 #install system dependecies
-RUN apk update \
-    && apk add postgresql-dev gcc python3-dev musl-dev
+RUN apk update 
+
+RUN apk add postgresql-dev gcc python3-dev musl-dev
+
+EXPOSE 5432
+
+RUN apk add --no-cache jpeg-dev zlib-dev
+
+
+RUN apk add --no-cache --virtual .build-deps build-base linux-headers \
+    && pip install Pillow
 
 COPY requirements.txt /app/requirements.txt
 
 RUN adduser -D myuser
-
 USER myuser
 
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 COPY . .
